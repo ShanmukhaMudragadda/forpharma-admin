@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 3000;
 // Serve static files from the dist directory
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// Handle React routing, return all requests to React app
-app.get('*', (req, res) => {
+// Handle React routing - use regex pattern instead of wildcard
+app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
