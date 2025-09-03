@@ -8,11 +8,11 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from the dist directory
-app.use(express.static(path.join(__dirname, 'dist')));
+// Serve static files from dist
+app.use(express.static('dist'));
 
-// Handle React routing - use regex pattern instead of wildcard
-app.get('/*', (req, res) => {
+// Fallback for client-side routing
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
