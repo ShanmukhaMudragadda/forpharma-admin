@@ -20,6 +20,7 @@ export class AdminService {
     private createChemistUrl = API_ENDPOINTS.CreateChemist;
     private createDoctorChemistRelationUrl = API_ENDPOINTS.CreateDoctorChemistRelation;
     private createDoctorConsultationScheduleUrl = API_ENDPOINTS.CreateDoctorConsultationSchedule;
+    private getDrugListUrl = API_ENDPOINTS.GetDrugList;
 
     async createOrganization(data: {
         name: string;
@@ -263,4 +264,34 @@ export class AdminService {
             throw error;
         }
     }
+
+    async getDrugList(token: string) {
+        try {
+            const response = await axios.get(this.getDrugListUrl, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching drug list:', error);
+            throw error;
+        }
+    }
+
+    async createDrug(data: any, token: string) {
+        try {
+            console.log('Creating drug with data:', data);
+            const response = await axios.post(API_ENDPOINTS.CreateDrug, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error creating drug:', error);
+            throw error;
+        }
+    }
+
 }

@@ -21,7 +21,9 @@ const API_ENDPOINTS = {
     CreateDoctorConsultationSchedule: `${API_BASE_URL}/doctors/createSchedules`,
     GetChemists: `${API_BASE_URL}/chemists`,
     CreateChemist: `${API_BASE_URL}/chemists/create`,
-    CreateDoctorChemistRelation: `${API_BASE_URL}/chemists/doctor-relations`
+    CreateDoctorChemistRelation: `${API_BASE_URL}/chemists/doctor-relations`,
+    GetDrugList: `${API_BASE_URL}/drugs/getDrugsList`,
+    CreateDrug: `${API_BASE_URL}/drugs/create`,
 };
 
 export default API_ENDPOINTS;

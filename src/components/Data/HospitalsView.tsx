@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { AdminService } from '../../services/admin.services';
 import { useAuth } from '../../hooks/useAuth';
+import Spinner from '../Spinner';
 
 // Types
 export interface Hospital {
@@ -132,6 +133,7 @@ const HospitalsView = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [token, setToken] = useState<string | null>(useAuth().token);
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (showCreateModal || showEditModal || showViewModal || showDeleteModal) {
@@ -179,6 +181,7 @@ const HospitalsView = () => {
 
   const fetchHospitals = async () => {
       try {
+        setLoading(true);
         const adminService = new AdminService();
         const response = await adminService.fetchHospitals(token || '');
         const data = await response.data;
@@ -186,6 +189,8 @@ const HospitalsView = () => {
         setHospitals(data);
       } catch (error) {
         console.error('Error fetching hospitals:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -284,6 +289,13 @@ const HospitalsView = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto p-4 space-y-4">
+
+        {loading ? (
+          <div className="flex items-center justify-center h-64">
+            <Spinner />
+          </div>
+        ) : (
+          <>
         {/* Header */}
         <div className="bg-surface rounded-lg shadow-sf border border-border p-4">
           <div className="flex justify-between items-center">
@@ -656,6 +668,7 @@ const HospitalsView = () => {
           onConfirm={handleDeleteHospital}
           hospitalName={selectedHospital?.name}
         />
+           </> )}
       </div>
     </div>
   );
